@@ -7,21 +7,28 @@
   <style>
     :root {
       --ink: #17202a;
-      --muted: #5a6675;
-      --line: #d8dee8;
-      --paper: #fbfcfe;
-      --panel: #ffffff;
+      --muted: #586575;
+      --paper: #f7f9fc;
+      --white: #ffffff;
+      --line: #d7dee8;
+      --soft-blue: #e9f1fb;
+      --soft-green: #eaf7f0;
+      --soft-gold: #fff3d4;
+      --soft-red: #fdeceb;
       --blue: #285f9f;
-      --green: #167a55;
+      --green: #157650;
+      --gold: #9a6a08;
       --red: #b84634;
-      --amber: #9a6a08;
-      --lavender: #eee9fb;
-      --cyan: #e7f5f7;
-      --gold: #fff4d8;
+      --violet: #6650a4;
+      --slate: #334155;
     }
 
     * {
       box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -29,42 +36,55 @@
       color: var(--ink);
       background: var(--paper);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.55;
+      font-size: 16px;
+      line-height: 1.58;
     }
 
-    header {
-      background:
-        linear-gradient(135deg, rgba(40, 95, 159, 0.92), rgba(22, 122, 85, 0.84)),
-        linear-gradient(90deg, #f2f7ff, #fff8df);
-      color: white;
-      padding: 72px 24px 44px;
+    a {
+      color: var(--blue);
     }
 
     .wrap {
-      width: min(1160px, calc(100% - 40px));
+      width: min(1180px, calc(100% - 40px));
       margin: 0 auto;
+    }
+
+    header {
+      color: white;
+      background: #17395f;
+      padding: 56px 0 42px;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+      gap: 34px;
+      align-items: center;
+    }
+
+    h1, h2, h3 {
+      letter-spacing: 0;
     }
 
     h1 {
       margin: 0 0 18px;
-      max-width: 900px;
-      font-size: clamp(2.2rem, 5vw, 4.8rem);
-      line-height: 1.02;
+      max-width: 860px;
+      font-size: 4rem;
+      line-height: 1.03;
       font-weight: 780;
-      letter-spacing: 0;
     }
 
     h2 {
       margin: 0 0 16px;
-      font-size: clamp(1.45rem, 2.4vw, 2.1rem);
-      line-height: 1.15;
-      letter-spacing: 0;
+      font-size: 2rem;
+      line-height: 1.18;
+      font-weight: 740;
     }
 
     h3 {
-      margin: 22px 0 10px;
-      font-size: 1.08rem;
-      letter-spacing: 0;
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+      line-height: 1.25;
     }
 
     p {
@@ -72,78 +92,295 @@
     }
 
     .lede {
-      max-width: 820px;
-      font-size: clamp(1.05rem, 1.7vw, 1.32rem);
+      max-width: 760px;
       color: rgba(255, 255, 255, 0.9);
+      font-size: 1.22rem;
     }
 
-    .hero-grid {
+    .hero-answer {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      margin-bottom: 18px;
+      padding: 5px 10px;
+      color: #10324f;
+      background: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      font-weight: 720;
+    }
+
+    .hero-panel {
+      background: #ffffff;
+      color: var(--ink);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      padding: 22px;
+    }
+
+    .hero-number {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 34px;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
     }
 
-    .metric {
-      min-height: 126px;
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      background: rgba(255, 255, 255, 0.14);
-      padding: 18px;
-      backdrop-filter: blur(10px);
+    .number-tile {
+      min-height: 112px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: #f8fbff;
     }
 
-    .metric .label {
+    .number-label {
       display: block;
-      color: rgba(255, 255, 255, 0.76);
+      color: var(--muted);
       font-size: 0.82rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
 
-    .metric .value {
+    .number-value {
       display: block;
       margin-top: 8px;
-      font-size: clamp(1.7rem, 3vw, 2.6rem);
+      font-size: 2.1rem;
       line-height: 1;
-      font-weight: 780;
+      font-weight: 800;
+      color: var(--green);
       letter-spacing: 0;
     }
 
-    .metric .note {
+    .number-note {
+      display: block;
       margin-top: 8px;
-      color: rgba(255, 255, 255, 0.82);
+      color: var(--muted);
       font-size: 0.92rem;
     }
 
-    main {
-      padding: 34px 0 64px;
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
-    section {
-      margin: 28px 0;
-      padding: 28px;
-      background: var(--panel);
+    .nav-inner {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 10px 0;
+    }
+
+    .nav-inner a {
+      flex: 0 0 auto;
+      padding: 6px 10px;
       border: 1px solid var(--line);
+      color: var(--slate);
+      text-decoration: none;
+      font-size: 0.92rem;
+      background: #fbfcfe;
     }
 
-    .split {
+    .band {
+      padding: 46px 0;
+      border-bottom: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .band.tint {
+      background: #f1f5f9;
+    }
+
+    .band.green {
+      background: #f0f8f4;
+    }
+
+    .section-lede {
+      max-width: 860px;
+      color: var(--muted);
+      font-size: 1.06rem;
+    }
+
+    .two-col {
       display: grid;
-      grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.88fr);
-      gap: 24px;
+      grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+      gap: 28px;
       align-items: start;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: var(--white);
+      padding: 18px;
+      border-radius: 6px;
+    }
+
+    .card.blue {
+      background: var(--soft-blue);
+      border-color: #c9d9ee;
+    }
+
+    .card.green {
+      background: var(--soft-green);
+      border-color: #c9e5d7;
+    }
+
+    .card.gold {
+      background: var(--soft-gold);
+      border-color: #e6d19c;
+    }
+
+    .card.red {
+      background: var(--soft-red);
+      border-color: #efc7c3;
     }
 
     .callout {
       border-left: 5px solid var(--green);
-      background: #eef8f3;
+      background: var(--soft-green);
       padding: 18px;
       color: #17392d;
     }
 
-    .caveat {
-      border-left-color: var(--amber);
-      background: var(--gold);
+    .callout.gold {
+      border-left-color: var(--gold);
+      background: var(--soft-gold);
       color: #4a370b;
+    }
+
+    .plain-list {
+      margin: 12px 0 0;
+      padding-left: 20px;
+    }
+
+    .plain-list li {
+      margin: 8px 0;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .flow-step {
+      position: relative;
+      min-height: 190px;
+      padding: 16px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    .flow-step::after {
+      content: "";
+      position: absolute;
+      top: 48px;
+      right: -10px;
+      width: 10px;
+      height: 2px;
+      background: #9aa7b7;
+    }
+
+    .flow-step:last-child::after {
+      display: none;
+    }
+
+    .step-num {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      margin-bottom: 12px;
+      background: var(--blue);
+      color: white;
+      font-weight: 760;
+      border-radius: 50%;
+    }
+
+    .flow-title {
+      font-weight: 760;
+      margin-bottom: 8px;
+    }
+
+    .flow-copy {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .diagram {
+      border: 1px solid var(--line);
+      background: var(--white);
+      border-radius: 6px;
+      padding: 18px;
+    }
+
+    .budget-row {
+      display: grid;
+      grid-template-columns: 160px minmax(180px, 1fr) 120px;
+      gap: 12px;
+      align-items: center;
+      min-height: 44px;
+      margin: 12px 0;
+    }
+
+    .budget-label {
+      color: var(--slate);
+      font-weight: 680;
+    }
+
+    .stack {
+      display: flex;
+      height: 28px;
+      border: 1px solid #cbd5e1;
+      background: #eef2f7;
+      overflow: hidden;
+    }
+
+    .stack-base {
+      background: #9db8d8;
+    }
+
+    .stack-ru {
+      background: var(--green);
+    }
+
+    .budget-note {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .model-strip {
+      display: grid;
+      grid-template-columns: 0.8fr 1fr 1.45fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .model-box {
+      display: grid;
+      place-items: center;
+      min-height: 86px;
+      padding: 12px;
+      text-align: center;
+      background: #f8fbff;
+      border: 1px solid #cad7e8;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    .model-box small {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-weight: 500;
     }
 
     .chart {
@@ -153,19 +390,19 @@
 
     .bar-row {
       display: grid;
-      grid-template-columns: 170px minmax(120px, 1fr) 90px;
+      grid-template-columns: 180px minmax(160px, 1fr) 92px;
       gap: 12px;
       align-items: center;
-      min-height: 34px;
+      min-height: 36px;
     }
 
     .bar-label {
-      color: var(--muted);
+      color: var(--slate);
       font-size: 0.95rem;
     }
 
     .bar-track {
-      height: 18px;
+      height: 20px;
       border: 1px solid #cfd8e6;
       background: #eef2f8;
       position: relative;
@@ -176,35 +413,76 @@
       background: var(--blue);
     }
 
-    .bar.extra {
-      background: var(--green);
+    .bar.same {
+      background: var(--violet);
     }
 
-    .bar.same {
-      background: #674fb2;
+    .bar.extra {
+      background: var(--green);
     }
 
     .bar-value {
       font-variant-numeric: tabular-nums;
       text-align: right;
+      color: var(--slate);
     }
 
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .pill {
-      display: inline-flex;
+    .gain-row {
+      display: grid;
+      grid-template-columns: 170px minmax(130px, 1fr) 84px;
+      gap: 12px;
       align-items: center;
-      min-height: 28px;
-      padding: 4px 10px;
+      margin: 10px 0;
+    }
+
+    .gain-track {
+      height: 18px;
+      border: 1px solid #c7d5c9;
+      background: #ecf7ee;
+    }
+
+    .gain-bar {
+      height: 100%;
+      background: var(--green);
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .metric {
       border: 1px solid var(--line);
-      background: #f7f9fc;
-      color: #334155;
-      font-size: 0.88rem;
+      background: var(--white);
+      padding: 16px;
+      min-height: 122px;
+      border-radius: 6px;
+    }
+
+    .metric b {
+      display: block;
+      margin-top: 8px;
+      color: var(--blue);
+      font-size: 1.8rem;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .transfer-map {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: #fbfcff;
+      border: 1px solid var(--line);
+      border-radius: 6px;
     }
 
     table {
@@ -229,10 +507,11 @@
     th {
       color: #364253;
       background: #f3f6fa;
-      font-weight: 700;
+      font-weight: 720;
     }
 
     .table-wrap {
+      margin-top: 18px;
       overflow-x: auto;
       border: 1px solid var(--line);
       background: white;
@@ -240,12 +519,12 @@
 
     .good {
       color: var(--green);
-      font-weight: 700;
+      font-weight: 740;
     }
 
     .bad {
       color: var(--red);
-      font-weight: 700;
+      font-weight: 740;
     }
 
     code, pre {
@@ -259,6 +538,7 @@
       color: #e5edf7;
       border: 1px solid #0f172a;
       font-size: 0.88rem;
+      border-radius: 6px;
     }
 
     .small {
@@ -266,38 +546,74 @@
       font-size: 0.92rem;
     }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
     }
 
-    .mini {
-      background: #f7f9fc;
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
       border: 1px solid var(--line);
-      padding: 16px;
+      background: #f7f9fc;
+      color: #334155;
+      font-size: 0.88rem;
+      border-radius: 999px;
     }
 
     footer {
-      padding: 24px 0 48px;
+      padding: 26px 0 52px;
       color: var(--muted);
       font-size: 0.92rem;
     }
 
-    @media (max-width: 820px) {
-      .hero-grid, .split, .grid-2 {
+    @media (max-width: 980px) {
+      h1 {
+        font-size: 3rem;
+      }
+
+      .hero-layout,
+      .two-col,
+      .flow,
+      .model-strip,
+      .metric-grid {
         grid-template-columns: 1fr;
       }
 
-      header {
-        padding-top: 52px;
+      .flow-step::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 680px) {
+      body {
+        font-size: 15px;
       }
 
-      section {
-        padding: 20px;
+      h1 {
+        font-size: 2.25rem;
       }
 
-      .bar-row {
+      h2 {
+        font-size: 1.55rem;
+      }
+
+      .wrap {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .hero-number,
+      .three-col {
+        grid-template-columns: 1fr;
+      }
+
+      .budget-row,
+      .bar-row,
+      .gain-row {
         grid-template-columns: 1fr;
         gap: 5px;
       }
@@ -305,165 +621,472 @@
       .bar-value {
         text-align: left;
       }
+
+      header {
+        padding-top: 40px;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="wrap">
-      <h1>Russian Inclusion Transfer Experiment</h1>
-      <p class="lede">
-        A small-GPU, autoresearch-style probe of whether adding Russian to a
-        production-like multilingual allocation helps related European
-        languages. The answer in this proxy is yes, with the clearest gains in
-        Cyrillic Slavic languages.
-      </p>
-      <div class="hero-grid" id="hero-metrics"></div>
+    <div class="wrap hero-layout">
+      <div>
+        <div class="hero-answer">Plain-language answer: Russian helped in this proxy.</div>
+        <h1>Should Russian be included in a multilingual training mix?</h1>
+        <p class="lede">
+          We ran a small, controlled experiment to test a practical data-mix
+          question: if a model already trains on many European languages, does
+          adding Russian help nearby languages, or does it simply take space
+          away from them?
+        </p>
+      </div>
+      <div class="hero-panel" aria-label="headline results">
+        <h2>What changed?</h2>
+        <p>
+          We trained the same small byte-level language model three ways:
+          without Russian, with Russian at the same total training budget, and
+          with Russian as extra data.
+        </p>
+        <div class="hero-number">
+          <div class="number-tile">
+            <span class="number-label">Same total budget</span>
+            <span class="number-value">-0.43%</span>
+            <span class="number-note">better Slavic target average</span>
+          </div>
+          <div class="number-tile">
+            <span class="number-label">Extra Russian data</span>
+            <span class="number-value">-0.61%</span>
+            <span class="number-note">better Slavic target average</span>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
-  <main class="wrap">
-    <section class="split">
-      <div>
-        <h2>What Was Tested</h2>
-        <p>
-          The experiment parses a large language/source allocation table,
-          extracts every language-coded row, collapses those token targets into
-          per-language sampling weights, and trains small byte-level language
-          models with and without Russian.
-        </p>
-        <p>
-          Russian was absent from the provided allocation. The comparison adds
-          <code>rus_Cyrl</code> with the same collapsed target mass as Ukrainian:
-          <strong>44,680m tokens</strong>. This is then tested two ways:
-          at the same total training budget, and with a slightly larger budget
-          proportional to the added Russian mass.
-        </p>
-        <div class="callout">
-          <strong>Core result:</strong> adding Russian improves the Slavic target
-          average by <strong>0.43%</strong> at the same total token budget and
-          by <strong>0.61%</strong> when Russian is treated as extra data.
-        </div>
-      </div>
-      <div>
-        <h3>Target Average BPB</h3>
-        <div class="chart" id="target-chart"></div>
-        <p class="small">Lower bits per byte is better.</p>
-      </div>
-    </section>
+  <nav>
+    <div class="wrap nav-inner">
+      <a href="#simple">Simple Summary</a>
+      <a href="#eval">What Was Evaluated</a>
+      <a href="#pipeline">What Was Done</a>
+      <a href="#budget">Budget Diagram</a>
+      <a href="#model">Model And Data</a>
+      <a href="#transfer">Language Transfer</a>
+      <a href="#results">Results</a>
+      <a href="#caveats">Caveats</a>
+      <a href="#reproduce">Reproduce</a>
+    </div>
+  </nav>
 
-    <section>
-      <h2>Why This Is Evidence For Including Russian</h2>
-      <div class="grid-2">
-        <div class="mini">
-          <h3>Transfer Appears Where Expected</h3>
-          <p>
-            The strongest same-budget gains are Russian, Ukrainian, Bulgarian,
-            Macedonian, and Serbian. That pattern is consistent with useful
-            overlap in script, morphology, byte statistics, names, loanwords,
-            and multilingual document conventions.
+  <main>
+    <section class="band" id="simple">
+      <div class="wrap two-col">
+        <div>
+          <h2>The experiment in one paragraph</h2>
+          <p class="section-lede">
+            We took the proposed multilingual allocation table, extracted the
+            language-specific token targets, and used those targets as sampling
+            weights. Then we added Russian at the same target mass as Ukrainian
+            and trained tiny models to see whether validation loss improved on
+            related languages.
           </p>
-        </div>
-        <div class="mini">
-          <h3>The Fixed-Budget Arm Matters</h3>
           <p>
-            At fixed budget, Russian has to compete with all other languages.
-            The Slavic target average still improves, so the result is not only
-            a "more tokens always helps" story.
+            The key comparison is the same-budget run. It keeps the total
+            training work fixed. That means Russian has to be useful enough to
+            make up for slightly reducing the sampling share of every other
+            language. In this run, it did: the Slavic target average improved.
           </p>
+          <div class="callout">
+            <strong>How to read the result:</strong> BPB means bits per byte.
+            Lower BPB means the model predicts the validation text better. A
+            negative delta is therefore an improvement.
+          </div>
         </div>
-        <div class="mini">
-          <h3>The Extra-Budget Arm Is A Sanity Check</h3>
-          <p>
-            When Russian is added as extra data, performance improves more
-            broadly. That says Russian is useful data in this proxy, not merely
-            a source of favorable random variation.
-          </p>
-        </div>
-        <div class="mini">
-          <h3>Trade-Offs Are Visible</h3>
-          <p>
-            Some Latin-script languages move slightly worse in the same-budget
-            arm because their sampling mass is diluted. This is exactly why
-            inclusion should be measured rather than argued abstractly.
+        <div class="diagram">
+          <h3>Headline result</h3>
+          <div class="chart" id="target-chart"></div>
+          <p class="small">
+            Target average covers Bulgarian, Ukrainian, Macedonian, Serbian,
+            Polish, Czech, Slovak, Slovene, Croatian, and Bosnian.
           </p>
         </div>
       </div>
     </section>
 
-    <section>
-      <h2>Target-Language Results</h2>
-      <p>
-        The target set was chosen to focus on languages where Russian might
-        plausibly help: Bulgarian, Ukrainian, Macedonian, Serbian, Polish,
-        Czech, Slovak, Slovene, Croatian, and Bosnian.
-      </p>
-      <div class="table-wrap">
-        <table id="target-table"></table>
+    <section class="band green" id="eval">
+      <div class="wrap two-col">
+        <div>
+          <h2>What exactly was evaluated?</h2>
+          <p class="section-lede">
+            The evaluation is language-model validation loss on held-out proxy
+            text, not a downstream task benchmark.
+          </p>
+          <p>
+            For every available language, the script builds two byte datasets
+            from FinePDFs-Edu one-shard samples: <strong>12 MB for training</strong>
+            and <strong>2 MB held out for validation</strong>. During evaluation,
+            the trained model sees random 256-byte chunks from the validation
+            split and is scored on how well it predicts the next byte.
+          </p>
+          <div class="callout">
+            <strong>So the question answered here is:</strong> after training
+            with or without Russian, does the model predict held-out text in
+            related languages better? In this proxy, yes. The Slavic target
+            average improved when Russian was included.
+          </div>
+        </div>
+        <div class="diagram">
+          <h3>Evaluation target</h3>
+          <div class="model-strip">
+            <div class="model-box">Held-out text<small>2 MB per language</small></div>
+            <div class="model-box">Random chunks<small>256 bytes each</small></div>
+            <div class="model-box">Predict next byte<small>40 eval batches/language</small></div>
+            <div class="model-box">BPB score<small>lower is better</small></div>
+          </div>
+          <p class="small" style="margin-top: 14px;">
+            This is not a direct evaluation of question answering, translation,
+            instruction following, or factual reasoning. It is a cheap signal of
+            whether the language model learned a better distribution for each
+            language.
+          </p>
+        </div>
       </div>
     </section>
 
-    <section>
-      <h2>All Evaluation Languages</h2>
-      <p>
-        The run evaluated 34 languages: 33 available languages from the collapsed
-        allocation plus Russian. This table shows BPB under each condition and
-        the same-budget delta against the no-Russian baseline.
-      </p>
-      <div class="table-wrap">
-        <table id="all-table"></table>
+    <section class="band tint" id="pipeline">
+      <div class="wrap">
+        <h2>What was actually done?</h2>
+        <p class="section-lede">
+          The experiment is intentionally simple. It does not try to train a
+          production model. It asks a narrow question cheaply: does adding a
+          Russian slice create measurable transfer in a multilingual language
+          model?
+        </p>
+        <div class="flow" aria-label="experiment pipeline">
+          <div class="flow-step">
+            <div class="step-num">1</div>
+            <div class="flow-title">Start with the proposed mix</div>
+            <div class="flow-copy">
+              The input is a long table of target token counts such as HPLT,
+              FinePDFs, Nemotron-CC-Opus, and Tower language slices.
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">2</div>
+            <div class="flow-title">Extract language rows</div>
+            <div class="flow-copy">
+              Rows ending in codes like <code>ukr_Cyrl</code> or
+              <code>pol_Latn</code> are grouped into language totals.
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">3</div>
+            <div class="flow-title">Add a Russian condition</div>
+            <div class="flow-copy">
+              Russian was not in the table, so <code>rus_Cyrl</code> was added
+              with the same collapsed token target as Ukrainian.
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">4</div>
+            <div class="flow-title">Train tiny models</div>
+            <div class="flow-copy">
+              The same model is trained without Russian, with Russian at fixed
+              budget, and with Russian as a small extra budget.
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">5</div>
+            <div class="flow-title">Measure prediction quality</div>
+            <div class="flow-copy">
+              Each model is evaluated on held-out text in 34 languages. Lower
+              BPB means the model predicts the bytes better.
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="split">
-      <div>
-        <h2>Experimental Setup</h2>
-        <p>
-          The model is deliberately small: a 6-layer, 6-head, 384-dimensional
-          byte-level causal Transformer trained at sequence length 256 and batch
-          size 64. Each base condition ran 1,200 steps across two seeds. The
-          extra-budget condition ran 1,219 steps, proportional to the extra
-          Russian language mass.
-        </p>
-        <p>
-          Each language used 12 MB of training bytes and 2 MB of validation
-          bytes built by streaming parquet batches from one FinePDFs-Edu shard
-          per language. Peak GPU memory was only 1.55 GB on an NVIDIA L4.
-        </p>
+    <section class="band" id="budget">
+      <div class="wrap two-col">
+        <div>
+          <h2>Why there are two Russian comparisons</h2>
+          <p>
+            Adding a language can mean two different things. You can keep the
+            total token budget fixed, which forces every language to give up a
+            tiny bit of sampling share. Or you can add the new language as extra
+            data, increasing the total budget.
+          </p>
+          <p>
+            The fixed-budget comparison is stricter. If it improves, that is
+            stronger evidence that Russian is useful for the target languages
+            rather than just useful because the model saw more total data.
+          </p>
+          <ul class="plain-list">
+            <li><strong>Same total budget:</strong> 19.7M training tokens in both arms.</li>
+            <li><strong>Extra budget:</strong> 20.0M training tokens, matching the added Russian mass.</li>
+            <li><strong>Russian insertion:</strong> 44,680m target tokens in the original allocation scale.</li>
+          </ul>
+        </div>
+        <div class="diagram">
+          <h3>Budget picture</h3>
+          <div class="budget-row">
+            <div class="budget-label">No Russian</div>
+            <div class="stack">
+              <div class="stack-base" style="width: 100%"></div>
+            </div>
+            <div class="budget-note">100% original mix</div>
+          </div>
+          <div class="budget-row">
+            <div class="budget-label">Same total</div>
+            <div class="stack">
+              <div class="stack-base" style="width: 98.48%"></div>
+              <div class="stack-ru" style="width: 1.52%"></div>
+            </div>
+            <div class="budget-note">Russian carved in</div>
+          </div>
+          <div class="budget-row">
+            <div class="budget-label">Extra budget</div>
+            <div class="stack">
+              <div class="stack-base" style="width: 98.48%"></div>
+              <div class="stack-ru" style="width: 1.52%"></div>
+            </div>
+            <div class="budget-note">Russian added</div>
+          </div>
+          <p class="small">
+            The green segment is Russian. It is visually small because the
+            experiment adds Russian at the same collapsed target mass as
+            Ukrainian, not as a dominant language.
+          </p>
+        </div>
       </div>
-      <div>
-        <h3>Language Weights</h3>
+    </section>
+
+    <section class="band green" id="model">
+      <div class="wrap">
+        <h2>What kind of model was trained?</h2>
+        <p class="section-lede">
+          The model is deliberately small so the experiment can run quickly on a
+          small GPU. It is not meant to be a final model. It is a measuring
+          instrument: if language transfer exists, even a small model should
+          show a directional signal.
+        </p>
+        <div class="two-col">
+          <div class="diagram">
+            <h3>Byte-level language model</h3>
+            <p>
+              The model reads text as UTF-8 bytes. It learns to predict the next
+              byte. This avoids tokenizer complications and makes the experiment
+              quick, although a production run should repeat the test with the
+              production tokenizer.
+            </p>
+            <div class="model-strip">
+              <div class="model-box">Bytes<small>UTF-8 text</small></div>
+              <div class="model-box">Embeddings<small>256 byte symbols</small></div>
+              <div class="model-box">6 Transformer layers<small>6 heads, 384 dim</small></div>
+              <div class="model-box">Next byte<small>loss = BPB</small></div>
+            </div>
+          </div>
+          <div class="diagram">
+            <h3>Data pipeline</h3>
+            <p>
+              The GPU machine did not have the full production corpora, so we
+              used one FinePDFs-Edu shard per available language as proxy text.
+              The script streams parquet batches, normalizes text, and builds a
+              byte cache for each language.
+            </p>
+            <div class="metric-grid">
+              <div class="metric"><span>Train bytes per language</span><b>12 MB</b></div>
+              <div class="metric"><span>Validation bytes per language</span><b>2 MB</b></div>
+              <div class="metric"><span>Evaluated languages</span><b>34</b></div>
+              <div class="metric"><span>Peak GPU memory</span><b>1.55 GB</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="transfer">
+      <div class="wrap two-col">
+        <div>
+          <h2>Why Russian might help other languages</h2>
+          <p>
+            Language models do not know political borders. They learn statistical
+            structure: characters, byte sequences, word fragments, grammar,
+            names, document formats, and factual distributions. Russian shares
+            some of that structure with several languages already in scope.
+          </p>
+          <p>
+            In this run, the strongest target-language gains appeared in
+            Cyrillic Slavic languages. That is the pattern we would expect if
+            Russian contributes useful shared signal rather than random noise.
+          </p>
+          <div class="pill-row">
+            <span class="pill">shared Cyrillic script</span>
+            <span class="pill">Slavic morphology</span>
+            <span class="pill">names and places</span>
+            <span class="pill">loanwords</span>
+            <span class="pill">document conventions</span>
+          </div>
+        </div>
+        <svg class="transfer-map" viewBox="0 0 760 500" role="img" aria-label="language transfer map">
+          <rect x="0" y="0" width="760" height="500" fill="#fbfcff"></rect>
+          <g stroke="#9fb2c8" stroke-width="3">
+            <line x1="380" y1="250" x2="170" y2="110"></line>
+            <line x1="380" y1="250" x2="590" y2="110"></line>
+            <line x1="380" y1="250" x2="150" y2="260"></line>
+            <line x1="380" y1="250" x2="600" y2="260"></line>
+            <line x1="380" y1="250" x2="210" y2="390"></line>
+            <line x1="380" y1="250" x2="540" y2="392"></line>
+            <line x1="380" y1="250" x2="380" y2="82"></line>
+            <line x1="380" y1="250" x2="380" y2="424"></line>
+          </g>
+          <g>
+            <circle cx="380" cy="250" r="76" fill="#eaf7f0" stroke="#157650" stroke-width="4"></circle>
+            <text x="380" y="240" text-anchor="middle" font-size="30" font-weight="800" fill="#17392d">Russian</text>
+            <text x="380" y="270" text-anchor="middle" font-size="16" fill="#376051">added slice</text>
+          </g>
+          <g font-size="18" font-weight="760" text-anchor="middle">
+            <circle cx="170" cy="110" r="56" fill="#eef5ff" stroke="#285f9f" stroke-width="3"></circle>
+            <text x="170" y="105" fill="#17395f">Ukrainian</text>
+            <text x="170" y="130" font-size="14" fill="#486582">-0.0517 BPB</text>
+            <circle cx="590" cy="110" r="56" fill="#eef5ff" stroke="#285f9f" stroke-width="3"></circle>
+            <text x="590" y="105" fill="#17395f">Bulgarian</text>
+            <text x="590" y="130" font-size="14" fill="#486582">-0.0414 BPB</text>
+            <circle cx="150" cy="260" r="56" fill="#eef5ff" stroke="#285f9f" stroke-width="3"></circle>
+            <text x="150" y="255" fill="#17395f">Macedonian</text>
+            <text x="150" y="280" font-size="14" fill="#486582">-0.0329 BPB</text>
+            <circle cx="600" cy="260" r="56" fill="#eef5ff" stroke="#285f9f" stroke-width="3"></circle>
+            <text x="600" y="255" fill="#17395f">Serbian</text>
+            <text x="600" y="280" font-size="14" fill="#486582">-0.0281 BPB</text>
+            <circle cx="210" cy="390" r="50" fill="#fff8e6" stroke="#9a6a08" stroke-width="3"></circle>
+            <text x="210" y="386" fill="#5b410b">Polish</text>
+            <text x="210" y="410" font-size="14" fill="#715516">+0.0082 BPB</text>
+            <circle cx="540" cy="392" r="50" fill="#fff8e6" stroke="#9a6a08" stroke-width="3"></circle>
+            <text x="540" y="388" fill="#5b410b">Czech</text>
+            <text x="540" y="412" font-size="14" fill="#715516">+0.0080 BPB</text>
+            <circle cx="380" cy="82" r="48" fill="#eef5ff" stroke="#285f9f" stroke-width="3"></circle>
+            <text x="380" y="78" fill="#17395f">Russian</text>
+            <text x="380" y="102" font-size="14" fill="#486582">-0.1450 BPB</text>
+            <circle cx="380" cy="424" r="48" fill="#eef5ff" stroke="#285f9f" stroke-width="3"></circle>
+            <text x="380" y="420" fill="#17395f">Slavic avg</text>
+            <text x="380" y="444" font-size="14" fill="#486582">-0.0131 BPB</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section class="band tint" id="results">
+      <div class="wrap">
+        <h2>Results in detail</h2>
+        <p class="section-lede">
+          Lower is better. The same-budget column is the cleanest test of
+          whether Russian helped under a fixed training budget.
+        </p>
+        <div class="two-col">
+          <div class="diagram">
+            <h3>Biggest same-budget gains</h3>
+            <div id="gain-chart"></div>
+          </div>
+          <div class="diagram">
+            <h3>What the top-line number means</h3>
+            <p>
+              The no-Russian model averaged <strong>3.0576 BPB</strong> on the
+              Slavic target set. Adding Russian at the same total budget reduced
+              that to <strong>3.0444 BPB</strong>. That is a
+              <strong>0.43%</strong> improvement in this proxy.
+            </p>
+            <p>
+              The effect is small but directionally useful, and it appears in a
+              setup where Russian is only about 1.52% of the available
+              language-coded mix after renormalization.
+            </p>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 28px;">Target-language table</h3>
         <div class="table-wrap">
-          <table id="weights-table"></table>
+          <table id="target-table"></table>
+        </div>
+
+        <h3 style="margin-top: 28px;">All evaluation languages</h3>
+        <div class="table-wrap">
+          <table id="all-table"></table>
         </div>
       </div>
     </section>
 
-    <section>
-      <h2>Scope And Caveats</h2>
-      <div class="callout caveat">
-        This is a cheap transfer probe, not a definitive downstream benchmark.
-        It matches language allocation weights using local proxy text. It does
-        not train on the full production Megatron/HPLT/Nemotron corpora, and it
-        does not use the production tokenizer.
+    <section class="band" id="weights">
+      <div class="wrap two-col">
+        <div>
+          <h2>What the model sampled from</h2>
+          <p>
+            The original table had many language-specific rows. The experiment
+            summed those rows into one target mass per language, then normalized
+            them into probabilities. English remains the largest available
+            language-coded slice, but many European languages are present.
+          </p>
+          <p>
+            Rows without language suffixes were not used for this language
+            transfer probe. That includes generic CLM, StarCoder, OLMo, math,
+            and generic Nemotron rows. They matter for the full production mix,
+            but not for this narrow question.
+          </p>
+        </div>
+        <div class="diagram">
+          <h3>Largest available language weights</h3>
+          <div class="table-wrap">
+            <table id="weights-table"></table>
+          </div>
+        </div>
       </div>
-      <p>
-        Rows without a language suffix, such as generic CLM, StarCoder, math,
-        OLMo, and generic Nemotron rows, are not used as language sampling
-        weights here. They are real production-mix mass, but they do not isolate
-        the narrow question of adding a Russian language slice.
-      </p>
-      <p>
-        The local proxy lacked data for <code>als_Latn</code>,
-        <code>gle_Latn</code>, <code>kat_Geor</code>, <code>nno_Latn</code>,
-        and <code>sqi_Latn</code>. All available language-coded weights were
-        included.
-      </p>
     </section>
 
-    <section>
-      <h2>Reproduction Command</h2>
-      <pre><code>cd /home/ubuntu/birger/russian-transfer-experiment
+    <section class="band tint" id="caveats">
+      <div class="wrap">
+        <h2>What this does and does not prove</h2>
+        <div class="three-col">
+          <div class="card green">
+            <h3>It does show</h3>
+            <p>
+              A controlled small-model signal that Russian improves the Slavic
+              target average under fixed budget in this proxy.
+            </p>
+          </div>
+          <div class="card gold">
+            <h3>It does not show</h3>
+            <p>
+              A final production-model result, a downstream benchmark result, or
+              the exact best Russian ratio for the final data mix.
+            </p>
+          </div>
+          <div class="card blue">
+            <h3>Best next step</h3>
+            <p>
+              Repeat with the production tokenizer, actual streamed production
+              shards, and downstream Ukrainian/Bulgarian/Serbian/Macedonian
+              evaluations.
+            </p>
+          </div>
+        </div>
+        <div class="callout gold" style="margin-top: 22px;">
+          <strong>Important caveat:</strong> this experiment uses FinePDFs-Edu
+          one-shard proxy data. It matches the language weights from the
+          allocation table where local data is available, but it is not the
+          complete production corpus.
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="reproduce">
+      <div class="wrap">
+        <h2>Reproduce the run</h2>
+        <p class="section-lede">
+          The reproducibility script and JSON outputs are committed alongside
+          this page. The command below is the exact small-GPU run used for the
+          report.
+        </p>
+        <pre><code>cd /home/ubuntu/birger/russian-transfer-experiment
 CUDA_VISIBLE_DEVICES=1 /home/ubuntu/birger/autoresearch/.venv/bin/python \
   mix_matched_russian_experiment.py \
   --data-root /home/ubuntu/birger/russian-transfer-experiment-data/raw \
@@ -478,13 +1101,14 @@ CUDA_VISIBLE_DEVICES=1 /home/ubuntu/birger/autoresearch/.venv/bin/python \
   --n-layer 6 \
   --n-head 6 \
   --n-embd 384</code></pre>
+      </div>
     </section>
   </main>
 
   <footer>
     <div class="wrap">
-      Generated from the experiment artifacts in
-      <code>mix_matched_full_20260529</code>. BPB means bits per byte.
+      Generated from the experiment artifacts in <code>mix_matched_full_20260529</code>.
+      BPB means bits per byte. Lower is better.
     </div>
   </footer>
 
@@ -523,7 +1147,7 @@ CUDA_VISIBLE_DEVICES=1 /home/ubuntu/birger/autoresearch/.venv/bin/python \
     const weights = {"bg":0.01332414140617105,"bs":0.010119425836790688,"ca":0.011936354210359467,"cs":0.014974950614156398,"da":0.010513958855051337,"de":0.03668464906634107,"el":0.021716620084083985,"en":0.4172359708903849,"es":0.07054527231776382,"et":0.009974071566905185,"eu":0.008143299929537787,"fi":0.012251288461778056,"fr":0.048413354319721255,"gl":0.008530911315899127,"hr":0.011258034284227123,"hu":0.016580769214796235,"is":0.007724541199629554,"it":0.034981927619110904,"lt":0.010361682953266525,"lv":0.014019765412051669,"mk":0.009704127922832111,"mt":0.010320499243465633,"nl":0.020560707556899274,"no":0.009482635702054203,"pl":0.022557598359850106,"pt":0.03920758389363944,"ro":0.01689570346621482,"sk":0.01133105750076484,"sl":0.01028554500237412,"sr":0.011538360376149163,"sv":0.014237796816879922,"tr":0.019124468937792526,"uk":0.015462925663057727};
 
     function pct(delta, base) {
-      return (100 * delta / base);
+      return 100 * delta / base;
     }
 
     function fmt(x, digits = 4) {
@@ -534,24 +1158,6 @@ CUDA_VISIBLE_DEVICES=1 /home/ubuntu/birger/autoresearch/.venv/bin/python \
       const cls = delta < 0 ? "good" : delta > 0 ? "bad" : "";
       const sign = delta > 0 ? "+" : "";
       return `<span class="${cls}">${sign}${fmt(delta)}</span>`;
-    }
-
-    function renderMetrics() {
-      const base = summary.base_no_ru.target_avg_bpb;
-      const same = summary.with_ru_same_total.target_avg_bpb;
-      const extra = summary.with_ru_extra_budget.target_avg_bpb;
-      const cards = [
-        ["Same-budget delta", `${fmt(same - base)} BPB`, `${fmt(pct(same - base, base), 2)}% target improvement`],
-        ["Extra-budget delta", `${fmt(extra - base)} BPB`, `${fmt(pct(extra - base, base), 2)}% target improvement`],
-        ["Run footprint", "1.55 GB", "Peak GPU memory on NVIDIA L4"]
-      ];
-      document.getElementById("hero-metrics").innerHTML = cards.map(([label, value, note]) => `
-        <div class="metric">
-          <span class="label">${label}</span>
-          <span class="value">${value}</span>
-          <div class="note">${note}</div>
-        </div>
-      `).join("");
     }
 
     function renderChart() {
@@ -566,11 +1172,36 @@ CUDA_VISIBLE_DEVICES=1 /home/ubuntu/birger/autoresearch/.venv/bin/python \
       document.getElementById("target-chart").innerHTML = rows.map(([label, key, cls]) => {
         const value = summary[key].target_avg_bpb;
         const width = 12 + 88 * ((value - min) / (max - min));
+        const base = summary.base_no_ru.target_avg_bpb;
+        const delta = value - base;
+        const detail = key === "base_no_ru" ? "baseline" : `${fmt(pct(delta, base), 2)}%`;
         return `
           <div class="bar-row">
             <div class="bar-label">${label}</div>
             <div class="bar-track"><div class="bar ${cls}" style="width:${width}%"></div></div>
-            <div class="bar-value">${fmt(value)}</div>
+            <div class="bar-value">${fmt(value)}<br><span class="small">${detail}</span></div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderGains() {
+      const rows = ["ru", "uk", "bg", "mk", "sr", "hr", "bs", "lv"];
+      const gains = rows.map(lang => {
+        const base = summary.base_no_ru.eval_bpb[lang];
+        const same = summary.with_ru_same_total.eval_bpb[lang];
+        return [lang, base - same];
+      });
+      const max = Math.max(...gains.map(([, gain]) => Math.max(0, gain)));
+      document.getElementById("gain-chart").innerHTML = gains.map(([lang, gain]) => {
+        const width = gain > 0 ? Math.max(4, 100 * gain / max) : 1;
+        const cls = gain > 0 ? "good" : "bad";
+        const sign = gain > 0 ? "-" : "+";
+        return `
+          <div class="gain-row">
+            <div>${langNames[lang]} <span class="small">(${lang})</span></div>
+            <div class="gain-track"><div class="gain-bar" style="width:${width}%"></div></div>
+            <div class="${cls}">${sign}${fmt(Math.abs(gain))}</div>
           </div>
         `;
       }).join("");
@@ -601,7 +1232,7 @@ CUDA_VISIBLE_DEVICES=1 /home/ubuntu/birger/autoresearch/.venv/bin/python \
     function renderWeights() {
       const rows = Object.entries(weights)
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 12)
+        .slice(0, 14)
         .map(([lang, weight]) => `<tr><td>${langNames[lang] || lang} (${lang})</td><td>${fmt(100 * weight, 2)}%</td></tr>`)
         .join("");
       document.getElementById("weights-table").innerHTML = `
@@ -610,12 +1241,11 @@ CUDA_VISIBLE_DEVICES=1 /home/ubuntu/birger/autoresearch/.venv/bin/python \
       `;
     }
 
-    renderMetrics();
     renderChart();
+    renderGains();
     renderResultTable("target-table", targetLangs);
     renderResultTable("all-table", Object.keys(summary.base_no_ru.eval_bpb).sort());
     renderWeights();
   </script>
 </body>
 </html>
-

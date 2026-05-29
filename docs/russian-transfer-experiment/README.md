@@ -26,6 +26,36 @@ The same-budget condition is the most important comparison. It means Russian
 was added while keeping the total number of training tokens constant, so the
 improvement is not just from seeing more data.
 
+## What Exactly Was Evaluated?
+
+This is the most important scope point: the evaluation is **language-model
+validation loss on held-out proxy text**, not a downstream benchmark.
+
+For each available language, the script streamed text from FinePDFs-Edu
+one-shard samples and built:
+
+```text
+12 MB training bytes per language
+ 2 MB held-out validation bytes per language
+```
+
+During evaluation, the model is given random 256-byte chunks from the validation
+split and is scored on how well it predicts the next byte. The score is BPB
+(bits per byte). Lower BPB means better prediction.
+
+So the question answered here is:
+
+> After training with or without Russian, does the model predict held-out text in
+> related languages better?
+
+In this proxy, yes. The Slavic target average improved when Russian was
+included.
+
+This report does **not** claim direct improvement on question answering,
+translation, instruction following, factual reasoning, or other downstream
+benchmarks. It is a cheap transfer signal that says Russian is worth including
+and testing more seriously in the real training setup.
+
 ## Strongest Signals
 
 Russian itself improved substantially, which is a sanity check that the
@@ -202,4 +232,3 @@ The next stronger version of this experiment would use the exact production
 tokenizer and stream from the actual Megatron/HPLT/Nemotron shards, then evaluate
 on downstream tasks such as Ukrainian, Bulgarian, Serbian, Macedonian, and
 cross-lingual knowledge transfer benchmarks.
-
