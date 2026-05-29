@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Russian Inclusion Transfer Experiment</title>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #5a6675;
+      --line: #d8dee8;
+      --paper: #fbfcfe;
+      --panel: #ffffff;
+      --blue: #285f9f;
+      --green: #167a55;
+      --red: #b84634;
+      --amber: #9a6a08;
+      --lavender: #eee9fb;
+      --cyan: #e7f5f7;
+      --gold: #fff4d8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    header {
+      background:
+        linear-gradient(135deg, rgba(40, 95, 159, 0.92), rgba(22, 122, 85, 0.84)),
+        linear-gradient(90deg, #f2f7ff, #fff8df);
+      color: white;
+      padding: 72px 24px 44px;
+    }
+
+    .wrap {
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      max-width: 900px;
+      font-size: clamp(2.2rem, 5vw, 4.8rem);
+      line-height: 1.02;
+      font-weight: 780;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: clamp(1.45rem, 2.4vw, 2.1rem);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 22px 0 10px;
+      font-size: 1.08rem;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    .lede {
+      max-width: 820px;
+      font-size: clamp(1.05rem, 1.7vw, 1.32rem);
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .metric {
+      min-height: 126px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.14);
+      padding: 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    .metric .label {
+      display: block;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .metric .value {
+      display: block;
+      margin-top: 8px;
+      font-size: clamp(1.7rem, 3vw, 2.6rem);
+      line-height: 1;
+      font-weight: 780;
+      letter-spacing: 0;
+    }
+
+    .metric .note {
+      margin-top: 8px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.92rem;
+    }
+
+    main {
+      padding: 34px 0 64px;
+    }
+
+    section {
+      margin: 28px 0;
+      padding: 28px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.88fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .callout {
+      border-left: 5px solid var(--green);
+      background: #eef8f3;
+      padding: 18px;
+      color: #17392d;
+    }
+
+    .caveat {
+      border-left-color: var(--amber);
+      background: var(--gold);
+      color: #4a370b;
+    }
+
+    .chart {
+      display: grid;
+      gap: 14px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 170px minmax(120px, 1fr) 90px;
+      gap: 12px;
+      align-items: center;
+      min-height: 34px;
+    }
+
+    .bar-label {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .bar-track {
+      height: 18px;
+      border: 1px solid #cfd8e6;
+      background: #eef2f8;
+      position: relative;
+    }
+
+    .bar {
+      height: 100%;
+      background: var(--blue);
+    }
+
+    .bar.extra {
+      background: var(--green);
+    }
+
+    .bar.same {
+      background: #674fb2;
+    }
+
+    .bar-value {
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      background: #f7f9fc;
+      color: #334155;
+      font-size: 0.88rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    th, td {
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+      vertical-align: top;
+      font-variant-numeric: tabular-nums;
+    }
+
+    th:first-child, td:first-child {
+      text-align: left;
+      font-variant-numeric: normal;
+    }
+
+    th {
+      color: #364253;
+      background: #f3f6fa;
+      font-weight: 700;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    .good {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .bad {
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    pre {
+      overflow-x: auto;
+      padding: 16px;
+      background: #111827;
+      color: #e5edf7;
+      border: 1px solid #0f172a;
+      font-size: 0.88rem;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .mini {
+      background: #f7f9fc;
+      border: 1px solid var(--line);
+      padding: 16px;
+    }
+
+    footer {
+      padding: 24px 0 48px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 820px) {
+      .hero-grid, .split, .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        padding-top: 52px;
+      }
+
+      section {
+        padding: 20px;
+      }
+
+      .bar-row {
+        grid-template-columns: 1fr;
+        gap: 5px;
+      }
+
+      .bar-value {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Russian Inclusion Transfer Experiment</h1>
+      <p class="lede">
+        A small-GPU, autoresearch-style probe of whether adding Russian to a
+        production-like multilingual allocation helps related European
+        languages. The answer in this proxy is yes, with the clearest gains in
+        Cyrillic Slavic languages.
+      </p>
+      <div class="hero-grid" id="hero-metrics"></div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="split">
+      <div>
+        <h2>What Was Tested</h2>
+        <p>
+          The experiment parses a large language/source allocation table,
+          extracts every language-coded row, collapses those token targets into
+          per-language sampling weights, and trains small byte-level language
+          models with and without Russian.
+        </p>
+        <p>
+          Russian was absent from the provided allocation. The comparison adds
+          <code>rus_Cyrl</code> with the same collapsed target mass as Ukrainian:
+          <strong>44,680m tokens</strong>. This is then tested two ways:
+          at the same total training budget, and with a slightly larger budget
+          proportional to the added Russian mass.
+        </p>
+        <div class="callout">
+          <strong>Core result:</strong> adding Russian improves the Slavic target
+          average by <strong>0.43%</strong> at the same total token budget and
+          by <strong>0.61%</strong> when Russian is treated as extra data.
+        </div>
+      </div>
+      <div>
+        <h3>Target Average BPB</h3>
+        <div class="chart" id="target-chart"></div>
+        <p class="small">Lower bits per byte is better.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Why This Is Evidence For Including Russian</h2>
+      <div class="grid-2">
+        <div class="mini">
+          <h3>Transfer Appears Where Expected</h3>
+          <p>
+            The strongest same-budget gains are Russian, Ukrainian, Bulgarian,
+            Macedonian, and Serbian. That pattern is consistent with useful
+            overlap in script, morphology, byte statistics, names, loanwords,
+            and multilingual document conventions.
+          </p>
+        </div>
+        <div class="mini">
+          <h3>The Fixed-Budget Arm Matters</h3>
+          <p>
+            At fixed budget, Russian has to compete with all other languages.
+            The Slavic target average still improves, so the result is not only
+            a "more tokens always helps" story.
+          </p>
+        </div>
+        <div class="mini">
+          <h3>The Extra-Budget Arm Is A Sanity Check</h3>
+          <p>
+            When Russian is added as extra data, performance improves more
+            broadly. That says Russian is useful data in this proxy, not merely
+            a source of favorable random variation.
+          </p>
+        </div>
+        <div class="mini">
+          <h3>Trade-Offs Are Visible</h3>
+          <p>
+            Some Latin-script languages move slightly worse in the same-budget
+            arm because their sampling mass is diluted. This is exactly why
+            inclusion should be measured rather than argued abstractly.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Target-Language Results</h2>
+      <p>
+        The target set was chosen to focus on languages where Russian might
+        plausibly help: Bulgarian, Ukrainian, Macedonian, Serbian, Polish,
+        Czech, Slovak, Slovene, Croatian, and Bosnian.
+      </p>
+      <div class="table-wrap">
+        <table id="target-table"></table>
+      </div>
+    </section>
+
+    <section>
+      <h2>All Evaluation Languages</h2>
+      <p>
+        The run evaluated 34 languages: 33 available languages from the collapsed
+        allocation plus Russian. This table shows BPB under each condition and
+        the same-budget delta against the no-Russian baseline.
+      </p>
+      <div class="table-wrap">
+        <table id="all-table"></table>
+      </div>
+    </section>
+
+    <section class="split">
+      <div>
+        <h2>Experimental Setup</h2>
+        <p>
+          The model is deliberately small: a 6-layer, 6-head, 384-dimensional
+          byte-level causal Transformer trained at sequence length 256 and batch
+          size 64. Each base condition ran 1,200 steps across two seeds. The
+          extra-budget condition ran 1,219 steps, proportional to the extra
+          Russian language mass.
+        </p>
+        <p>
+          Each language used 12 MB of training bytes and 2 MB of validation
+          bytes built by streaming parquet batches from one FinePDFs-Edu shard
+          per language. Peak GPU memory was only 1.55 GB on an NVIDIA L4.
+        </p>
+      </div>
+      <div>
+        <h3>Language Weights</h3>
+        <div class="table-wrap">
+          <table id="weights-table"></table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Scope And Caveats</h2>
+      <div class="callout caveat">
+        This is a cheap transfer probe, not a definitive downstream benchmark.
+        It matches language allocation weights using local proxy text. It does
+        not train on the full production Megatron/HPLT/Nemotron corpora, and it
+        does not use the production tokenizer.
+      </div>
+      <p>
+        Rows without a language suffix, such as generic CLM, StarCoder, math,
+        OLMo, and generic Nemotron rows, are not used as language sampling
+        weights here. They are real production-mix mass, but they do not isolate
+        the narrow question of adding a Russian language slice.
+      </p>
+      <p>
+        The local proxy lacked data for <code>als_Latn</code>,
+        <code>gle_Latn</code>, <code>kat_Geor</code>, <code>nno_Latn</code>,
+        and <code>sqi_Latn</code>. All available language-coded weights were
+        included.
+      </p>
+    </section>
+
+    <section>
+      <h2>Reproduction Command</h2>
+      <pre><code>cd /home/ubuntu/birger/russian-transfer-experiment
+CUDA_VISIBLE_DEVICES=1 /home/ubuntu/birger/autoresearch/.venv/bin/python \
+  mix_matched_russian_experiment.py \
+  --data-root /home/ubuntu/birger/russian-transfer-experiment-data/raw \
+  --work-dir /home/ubuntu/birger/russian-transfer-experiment/mix_matched_full_20260529 \
+  --train-bytes 12000000 \
+  --val-bytes 2000000 \
+  --seq-len 256 \
+  --batch-size 64 \
+  --steps 1200 \
+  --eval-batches 40 \
+  --seeds 1,2 \
+  --n-layer 6 \
+  --n-head 6 \
+  --n-embd 384</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Generated from the experiment artifacts in
+      <code>mix_matched_full_20260529</code>. BPB means bits per byte.
+    </div>
+  </footer>
+
+  <script>
+    const targetLangs = ["bg", "uk", "mk", "sr", "pl", "cs", "sk", "sl", "hr", "bs"];
+    const langNames = {
+      bg: "Bulgarian", bs: "Bosnian", ca: "Catalan", cs: "Czech", da: "Danish",
+      de: "German", el: "Greek", en: "English", es: "Spanish", et: "Estonian",
+      eu: "Basque", fi: "Finnish", fr: "French", gl: "Galician", hr: "Croatian",
+      hu: "Hungarian", is: "Icelandic", it: "Italian", lt: "Lithuanian",
+      lv: "Latvian", mk: "Macedonian", mt: "Maltese", nl: "Dutch",
+      no: "Norwegian Bokmal", pl: "Polish", pt: "Portuguese", ro: "Romanian",
+      ru: "Russian", sk: "Slovak", sl: "Slovene", sr: "Serbian",
+      sv: "Swedish", tr: "Turkish", uk: "Ukrainian"
+    };
+    const summary = {
+      base_no_ru: {
+        target_avg_bpb: 3.057585185389086,
+        train_tokens_m: 19.6608,
+        peak_gb: 1.5462398529052734,
+        eval_bpb: {"bg":2.2334241807063515,"bs":3.5117997564913863,"ca":3.0656175078304724,"cs":3.609216340874065,"da":3.3799740786034995,"de":3.287827610186005,"el":2.622712648705508,"en":2.7878995341064607,"es":2.9177583302579717,"et":3.6474475897107466,"eu":3.4061423912160365,"fi":3.469478867706344,"fr":2.988087096785276,"gl":3.006446266262712,"hr":3.4687121690487976,"hu":3.5302933390096043,"is":3.4537143402885473,"it":3.176991034675151,"lt":3.537090321248715,"lv":3.498289388480183,"mk":2.3048215162893455,"mt":3.7195604741611374,"nl":3.3633747602971136,"no":3.359911459665364,"pl":3.4238475063726757,"pt":3.018706329001275,"ro":3.2829359463436107,"ru":2.4379409164700827,"sk":3.622650580764864,"sl":3.5028763506600438,"sr":2.349395579880305,"sv":3.289780808552721,"tr":3.44006762443174,"uk":2.549107872803027}
+      },
+      with_ru_same_total: {
+        target_avg_bpb: 3.044444272443272,
+        train_tokens_m: 19.6608,
+        peak_gb: 1.5470943450927734,
+        eval_bpb: {"bg":2.1920699870537614,"bs":3.5093852017650313,"ca":3.0807238275464526,"cs":3.6171985974459586,"da":3.3797442710858507,"de":3.2979929801314203,"el":2.6232126710646266,"en":2.8064540479280966,"es":2.9298054096817063,"et":3.6424309503755365,"eu":3.410467419519067,"fi":3.4719974461390732,"fr":2.9978340286415754,"gl":3.021781778658365,"hr":3.4668379365162254,"hu":3.5376727533945607,"is":3.4572785087450284,"it":3.180814282096458,"lt":3.548263337545535,"lv":3.497511093892402,"mk":2.2719092630370072,"mt":3.749429612644531,"nl":3.3672591733481996,"no":3.3580947854264687,"pl":3.4320562339987912,"pt":3.028550044094348,"ro":3.2874292467718114,"ru":2.2929373839779545,"sk":3.6300731112003914,"sl":3.5061925158344143,"sr":2.3213210330634357,"sv":3.299006830756955,"tr":3.446418135409645,"uk":2.497398844517698}
+      },
+      with_ru_extra_budget: {
+        target_avg_bpb: 3.038836341705913,
+        train_tokens_m: 19.972096,
+        peak_gb: 1.5470943450927734,
+        eval_bpb: {"bg":2.188580448318839,"bs":3.5033861545324303,"ca":3.069496327145839,"cs":3.6106849394258793,"da":3.372026098173923,"de":3.2881180372885166,"el":2.6182699670710226,"en":2.7898716376660735,"es":2.917682761081183,"et":3.63720848650334,"eu":3.4045136252214743,"fi":3.4651188022377664,"fr":2.984358371028883,"gl":3.0107497494391557,"hr":3.4600360011767695,"hu":3.5309222193698817,"is":3.448293339644195,"it":3.1713745026554667,"lt":3.5405561199284685,"lv":3.490645451879501,"mk":2.2677167624149486,"mt":3.739206030871365,"nl":3.35738542578472,"no":3.3503613619529764,"pl":3.4243537244067914,"pt":3.0159979290172227,"ro":3.279483837482865,"ru":2.287997818667728,"sk":3.625462174639001,"sl":3.500971621303907,"sr":2.3158334686838504,"sv":3.289876525497059,"tr":3.436641751524385,"uk":2.4913381221567144}
+      }
+    };
+    const weights = {"bg":0.01332414140617105,"bs":0.010119425836790688,"ca":0.011936354210359467,"cs":0.014974950614156398,"da":0.010513958855051337,"de":0.03668464906634107,"el":0.021716620084083985,"en":0.4172359708903849,"es":0.07054527231776382,"et":0.009974071566905185,"eu":0.008143299929537787,"fi":0.012251288461778056,"fr":0.048413354319721255,"gl":0.008530911315899127,"hr":0.011258034284227123,"hu":0.016580769214796235,"is":0.007724541199629554,"it":0.034981927619110904,"lt":0.010361682953266525,"lv":0.014019765412051669,"mk":0.009704127922832111,"mt":0.010320499243465633,"nl":0.020560707556899274,"no":0.009482635702054203,"pl":0.022557598359850106,"pt":0.03920758389363944,"ro":0.01689570346621482,"sk":0.01133105750076484,"sl":0.01028554500237412,"sr":0.011538360376149163,"sv":0.014237796816879922,"tr":0.019124468937792526,"uk":0.015462925663057727};
+
+    function pct(delta, base) {
+      return (100 * delta / base);
+    }
+
+    function fmt(x, digits = 4) {
+      return Number(x).toFixed(digits);
+    }
+
+    function deltaCell(delta) {
+      const cls = delta < 0 ? "good" : delta > 0 ? "bad" : "";
+      const sign = delta > 0 ? "+" : "";
+      return `<span class="${cls}">${sign}${fmt(delta)}</span>`;
+    }
+
+    function renderMetrics() {
+      const base = summary.base_no_ru.target_avg_bpb;
+      const same = summary.with_ru_same_total.target_avg_bpb;
+      const extra = summary.with_ru_extra_budget.target_avg_bpb;
+      const cards = [
+        ["Same-budget delta", `${fmt(same - base)} BPB`, `${fmt(pct(same - base, base), 2)}% target improvement`],
+        ["Extra-budget delta", `${fmt(extra - base)} BPB`, `${fmt(pct(extra - base, base), 2)}% target improvement`],
+        ["Run footprint", "1.55 GB", "Peak GPU memory on NVIDIA L4"]
+      ];
+      document.getElementById("hero-metrics").innerHTML = cards.map(([label, value, note]) => `
+        <div class="metric">
+          <span class="label">${label}</span>
+          <span class="value">${value}</span>
+          <div class="note">${note}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderChart() {
+      const rows = [
+        ["No Russian", "base_no_ru", "base"],
+        ["Russian, same total", "with_ru_same_total", "same"],
+        ["Russian, extra budget", "with_ru_extra_budget", "extra"]
+      ];
+      const vals = rows.map(([, key]) => summary[key].target_avg_bpb);
+      const min = Math.min(...vals) - 0.01;
+      const max = Math.max(...vals) + 0.01;
+      document.getElementById("target-chart").innerHTML = rows.map(([label, key, cls]) => {
+        const value = summary[key].target_avg_bpb;
+        const width = 12 + 88 * ((value - min) / (max - min));
+        return `
+          <div class="bar-row">
+            <div class="bar-label">${label}</div>
+            <div class="bar-track"><div class="bar ${cls}" style="width:${width}%"></div></div>
+            <div class="bar-value">${fmt(value)}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderResultTable(id, langs) {
+      const head = `
+        <thead><tr>
+          <th>Language</th><th>No Russian</th><th>Russian same</th>
+          <th>Delta same</th><th>Russian extra</th><th>Delta extra</th>
+        </tr></thead>`;
+      const body = langs.map(lang => {
+        const base = summary.base_no_ru.eval_bpb[lang];
+        const same = summary.with_ru_same_total.eval_bpb[lang];
+        const extra = summary.with_ru_extra_budget.eval_bpb[lang];
+        return `<tr>
+          <td>${langNames[lang] || lang} <span class="small">(${lang})</span></td>
+          <td>${fmt(base)}</td>
+          <td>${fmt(same)}</td>
+          <td>${deltaCell(same - base)}</td>
+          <td>${fmt(extra)}</td>
+          <td>${deltaCell(extra - base)}</td>
+        </tr>`;
+      }).join("");
+      document.getElementById(id).innerHTML = head + `<tbody>${body}</tbody>`;
+    }
+
+    function renderWeights() {
+      const rows = Object.entries(weights)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 12)
+        .map(([lang, weight]) => `<tr><td>${langNames[lang] || lang} (${lang})</td><td>${fmt(100 * weight, 2)}%</td></tr>`)
+        .join("");
+      document.getElementById("weights-table").innerHTML = `
+        <thead><tr><th>Language</th><th>Base weight</th></tr></thead>
+        <tbody>${rows}</tbody>
+      `;
+    }
+
+    renderMetrics();
+    renderChart();
+    renderResultTable("target-table", targetLangs);
+    renderResultTable("all-table", Object.keys(summary.base_no_ru.eval_bpb).sort());
+    renderWeights();
+  </script>
+</body>
+</html>
+
