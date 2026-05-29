@@ -43,6 +43,30 @@ During evaluation, the model is given random 256-byte chunks from the validation
 split and is scored on how well it predicts the next byte. The score is BPB
 (bits per byte). Lower BPB means better prediction.
 
+More concretely, the evaluation loop is:
+
+1. Pick one language, such as Ukrainian or Bulgarian.
+2. Sample batches of 256-byte chunks from that language's 2 MB validation split.
+3. Feed bytes `1..255` to the model.
+4. Ask the model to predict bytes `2..256` from the same held-out text.
+5. Convert the prediction loss to bits per byte.
+6. Average that score over 40 evaluation batches for the language.
+
+In pseudocode:
+
+```python
+for language in eval_languages:
+    chunks = sample(validation_bytes[language])
+    prediction = model(chunks[:, :-1])
+    target = chunks[:, 1:]
+    bpb[language] = cross_entropy(prediction, target) / log(2)
+```
+
+There are no task labels, prompts, multiple-choice questions, or human
+judgments in this evaluation. The "label" is simply the next byte from the same
+held-out text. The eval asks: given this language's validation text, how
+surprised is the model by the next byte?
+
 So the question answered here is:
 
 > After training with or without Russian, does the model predict held-out text in

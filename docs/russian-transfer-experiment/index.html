@@ -383,6 +383,33 @@
       font-weight: 500;
     }
 
+    .eval-loop {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .eval-card {
+      min-height: 148px;
+      padding: 14px;
+      border: 1px solid #cad7e8;
+      background: #f8fbff;
+      border-radius: 6px;
+    }
+
+    .eval-card b {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--blue);
+      font-size: 1.02rem;
+    }
+
+    .eval-card span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
     .chart {
       display: grid;
       gap: 14px;
@@ -580,6 +607,7 @@
       .two-col,
       .flow,
       .model-strip,
+      .eval-loop,
       .metric-grid {
         grid-template-columns: 1fr;
       }
@@ -728,6 +756,13 @@
             the trained model sees random 256-byte chunks from the validation
             split and is scored on how well it predicts the next byte.
           </p>
+          <p>
+            There are no task labels, prompts, multiple-choice questions, or
+            human judgments in this evaluation. The "label" for each byte is
+            simply the next byte from the same held-out text. The eval asks:
+            given this language's validation text, how surprised is the model by
+            the next byte?
+          </p>
           <div class="callout">
             <strong>So the question answered here is:</strong> after training
             with or without Russian, does the model predict held-out text in
@@ -736,12 +771,24 @@
           </div>
         </div>
         <div class="diagram">
-          <h3>Evaluation target</h3>
-          <div class="model-strip">
-            <div class="model-box">Held-out text<small>2 MB per language</small></div>
-            <div class="model-box">Random chunks<small>256 bytes each</small></div>
-            <div class="model-box">Predict next byte<small>40 eval batches/language</small></div>
-            <div class="model-box">BPB score<small>lower is better</small></div>
+          <h3>Evaluation loop</h3>
+          <div class="eval-loop">
+            <div class="eval-card">
+              <b>1. Pick a language</b>
+              <span>Evaluate each language separately, using its own held-out validation bytes.</span>
+            </div>
+            <div class="eval-card">
+              <b>2. Sample text chunks</b>
+              <span>Draw random 256-byte chunks from the 2 MB validation split.</span>
+            </div>
+            <div class="eval-card">
+              <b>3. Predict shifted bytes</b>
+              <span>The input is bytes 1..255. The target is bytes 2..256 from the same text.</span>
+            </div>
+            <div class="eval-card">
+              <b>4. Average BPB</b>
+              <span>Cross-entropy is converted to bits per byte and averaged over 40 batches.</span>
+            </div>
           </div>
           <p class="small" style="margin-top: 14px;">
             This is not a direct evaluation of question answering, translation,
@@ -749,6 +796,11 @@
             whether the language model learned a better distribution for each
             language.
           </p>
+          <pre><code>for language in eval_languages:
+    chunks = sample(validation_bytes[language])
+    prediction = model(chunks[:, :-1])
+    target = chunks[:, 1:]
+    bpb[language] = cross_entropy(prediction, target) / log(2)</code></pre>
         </div>
       </div>
     </section>
