@@ -13,8 +13,11 @@ political one:
 
 ## Result Summary
 
-Lower BPB is better. The target average is over Bulgarian, Ukrainian,
-Macedonian, Serbian, Polish, Czech, Slovak, Slovene, Croatian, and Bosnian.
+Lower BPB is better. BPB means **bits per byte**: the average number of
+base-2 bits the model would need to encode each byte of held-out text, based on
+the probabilities it assigns. It is the byte-level version of language-model
+validation loss. The target average is over Bulgarian, Ukrainian, Macedonian,
+Serbian, Polish, Czech, Slovak, Slovene, Croatian, and Bosnian.
 
 | condition | target avg BPB | delta vs no Russian | relative delta | train tokens | peak GPU |
 |---|---:|---:|---:|---:|---:|
@@ -42,6 +45,18 @@ one-shard samples and built:
 During evaluation, the model is given random 256-byte chunks from the validation
 split and is scored on how well it predicts the next byte. The score is BPB
 (bits per byte). Lower BPB means better prediction.
+
+BPB is computed from the model's cross-entropy loss:
+
+```text
+BPB = cross_entropy / log(2)
+```
+
+Cross-entropy is normally measured in natural-log units. Dividing by `log(2)`
+converts it to bits. Because this experiment trains a byte-level model, the
+unit is "per byte". A lower BPB means the model is less surprised by the
+held-out text. This is not classification accuracy, and it is not a downstream
+benchmark score.
 
 More concretely, the evaluation loop is:
 

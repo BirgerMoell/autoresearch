@@ -648,6 +648,20 @@
     logits = model(chunks[:, :-1])
     target = chunks[:, 1:]
     bpb[language] = cross_entropy(logits, target) / log(2)</code></pre>
+          <div class="panel blue" style="margin-top: 16px;">
+            <h3>What is BPB?</h3>
+            <p>
+              BPB means <strong>bits per byte</strong>. It is the average number
+              of bits the model would need to encode one byte of held-out text,
+              based on the probabilities it assigns. Lower BPB means the model
+              is less surprised by the text and predicts it better.
+            </p>
+            <p>
+              In formula form: <code>BPB = cross_entropy / log(2)</code>. This
+              report does not use classification accuracy because the eval is
+              next-byte language modeling, not a labeled task.
+            </p>
+          </div>
           <div class="callout amber" style="margin-top: 16px;">
             <strong>This answers a narrow question:</strong> does Russian in the
             train mixture improve next-byte modeling of held-out text in related
